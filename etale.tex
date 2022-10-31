@@ -1,0 +1,344 @@
+\documentclass[oneside]{amsart}
+\usepackage[left=1.25in,right=1.25in,top=0.75in,bottom=0.75in]{geometry}
+\usepackage{amssymb,latexsym,amsmath,amsthm}
+\usepackage{natbib}
+% \linespread{1.05}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=cyan,
+  linkcolor=red,
+  urlcolor= teal}
+% \usepackage{newpxmath}
+% \usepackage{euler}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage[T1]{fontenc}
+\usepackage{xstring}
+\usepackage{xparse}
+\usepackage{mathrsfs}
+% \definecolor{brightmaroon}{rgb}{0.76, 0.13, 0.28}
+%\usepackage{fullpage}
+% \usepackage[a4paper, total={5.5in, 9in}]{geometry}
+\usepackage{tikz-cd}
+
+\theoremstyle{definition}
+%% this allows for theorems which are not automatically numbered
+\newtheorem{defi}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{obs}{Observation}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{rem}{Remark}[section]
+\newtheorem{construction}{Construction}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{coro}{Corollary}[section]
+\newtheorem{disc}{Discussion}[section]
+\DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\obj}{obj}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\tor}{Tor}
+\DeclareMathOperator{\ann}{ann}
+\DeclareMathOperator{\cov}{Cov}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\proj}{Proj}
+\DeclareMathOperator{\Id}{id}
+\DeclareMathOperator{\gal}{Gal}
+\DeclareMathOperator{\coker}{coker}
+\newcommand{\degg}{\textup{deg}}
+\newtheorem{ex}{Example}[section]
+%% The above lines are for formatting.  In general, you will not want to change these.
+%%Commands to make life easier
+\newcommand{\aff}{\mathbb A}
+\newcommand{\ff}{\mathbb F}
+\usepackage{mathtools}
+\newcommand{\rr}{\mathbf R}
+\newcommand{\cc}{\mathbf C}
+\newcommand{\complex}{\mathbf {C}_\bullet}
+\newcommand{\nn}{\mathbb N}
+\newcommand{\zz}{\mathbf Z}
+\newcommand{\PP}{\mathbf P}
+\newcommand{\qq}{\mathbf Q}
+\newcommand{\p}{\mathfrak p}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\aut}{Aut}
+\newcommand{\pp}{\prime}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+%Itemize gap:
+\defcitealias{Stacks}{SP}
+\defcitealias{Hart}{Hart}
+
+
+
+% \pagecolor{black}
+% \color{white}
+% Author info
+
+\title{Math 490}
+\author{Juan Serratos}
+\email{jserrato@usc.edu}
+\date{October 18, 2022 \\ {Department of Mathematics, University of Southern California}}
+\address{Department of Mathematics, University of Southern California, 
+Los Angeles, CA 90007}
+\begin{document}
+\maketitle
+\begin{abstract} Consider the (group) scheme which is the kernel of the endomorphism $\mathbb G_m \to \mathbb G_m$, $t \mapsto t^n$, of the multiplicative group scheme $\mathbb G_m$ over $\zz$. We have the modest goal of computing the \'etale cohmology groups of the (group) scheme $\mu_n$. As a scheme, $\mu_n = \spec \zz [t]/(t^n-1)$, and for a given commutative ring $A$, we have the multiplicative group $\mu_n(A) = \{ t \in A \colon t^n = 1\}$. The important result will be that if we let $X$ be a complete connected nonsingular curve over an algebraically closed field $k$ with genus $g$, and for any $n$ prime to the characteristic of $k$, we have $H^0 (X_{\text{\'et}}, \mu_n) = \mu (k)$, $H^1(X_{\text{\'et}}, \mu_n) \simeq (\zz / n \zz)^{2g}$, $H^2(X_{\text{\'et}}, \mu_n) \simeq \zz / n \zz $, and $H^q (X_{\text{\'et}}, \mu_n) = 0$ for $q > 2$. We will first begin with a spotty recollection of some scheme theory to fix some notation, as well as to serve as a reintroduction. By an affine variety, we mean a scheme $X/k$ where $k = \overline{k}$ is an algebraically closed where $X = \spec A$ and $A$ is a finitely generated $k$-algebra with no zero divisors. 
+	\end{abstract}
+\tableofcontents
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+% \tableofcontents
+\section{Scheme Topics}
+\subsection{Subschemes and immersions}
+\begin{defi}
+An \textbf{open subscheme} of a scheme $X$ is a scheme $U$, where $U \subseteq X$ is an open subset, and whose structure sheaf $\mathscr O_U$ is isomorphic to the restriction sheaf $\mathscr O_X |_U$ of $X$. An \textbf{open immersion} is a morphism $f \colon X \to Y$ that induces an isomorphism of $X$ with an open subscheme of $Y$.
+\end{defi}
+Alternatively, although this is the definition provided in \citepalias{Hart}, we can perhaps choose a more \textit{immediate} definition. Let $X$ be a scheme and let $U \subseteq X$ be an open set. Then $(U, \mathscr O_X |_U)$ is a scheme which we call an \textit{open subscheme} of $X$. Then the natural morphism $\ell \colon U \to X$, where $\ell^\sharp \colon \mathscr O _X \to \ell _\ast \mathscr O_X|_U$ is called an \textit{open immersion}. Recall that the pullback $\ell ^\sharp$ here means that for any open set $V \subseteq X$, we have $\ell_\ast \mathscr O_X|_U(V)$ corresponding to $\mathscr O_X|_U(\ell^{-1}(V))$. In particular, recall that the open sets $D(f)$ of $\spec A$, where $f \in A$ and $A$ is a ring, form a basis for the topology, and furthermore $D(f)$ is quasi compact (which means that $\spec A$ is quasi-compact as $D(1) = \spec A$). Additionally, the open subset $D(f) \subseteq \spec A$ can be canonically be identified to the spectrum $\spec A_f$ (which we think of being a directly corresponding open subscheme of $\spec A$). More formally, $(D(f), \mathscr O_{\spec A}|_{D(f)} ) \simeq (\spec A_f, \mathscr O_{\spec A_f})$. Thus we essentially classify open immersions to be (locally) of the form $\spec A_f \to \spec A$.
+
+While this notion of open subschemes and open immersions is rather intuitive, the definition of what a closed subscheme and closed immersions will be comparably more difficult due to the fact that we have to define the locally ringed space structure on a closed set, for which there is no canonical choice. 
+\begin{defi}
+ A \textbf{closed immersion} is a morphism $f\colon Y \to X$ of schemes such that $f$ induces a homeomorphism of $|Y|$ onto a closed subset of $|X |$, and furthermore the induced map $f ^{\sharp} \colon \mathscr O _X \to f _{\ast} \mathscr O _Y$ of sheaves on $X$ is surjective. A \textbf{closed subscheme} of a scheme X is an equivalence class of closed immersions, where we say $f \colon Y \to X$ and $f ^{\prime} \colon Y ^{\prime} \to X$ are equivalent if there is an isomorphism $i \colon Y' \to Y$ such that $f ^{\prime} = f \circ i$.
+\end{defi}
+\begin{lemma}[\citepalias{Stacks}, \href{https://stacks.math.columbia.edu/tag/00E5}{Tag 00E5}] Let $R$ be a ring. Let $I$ be an ideal of $R$. The map $R \to R/I$ induces via the functoriality of $\spec$ a homeomorphism 
+\[
+\spec (R/I) \to V(I) \subseteq \spec (R).
+\] The inverse is given by $\mathfrak p \mapsto \mathfrak p /I$.
+\end{lemma}
+
+\begin{ex} Let $A$ be a ring and let $J$ be an ideal of $A$. Then the natural map $\pi \colon A \to A / J$ induces a map of schemes $ \pi^\sharp = \spec ( \pi) \colon \spec A/J \to \spec A$ which is a closed immersion.\footnote{ Recall that that if $\varphi \colon R \to S$ is a map of ring then we have induced map of schemes where $\spec (\varphi) \colon \spec S \to \spec R$ is given by $\spec (\varphi) \colon \mathfrak p \mapsto \varphi^{-1} (\mathfrak p)$. } The map $\pi^\sharp$  induces a homeomorphism of $ \spec A/J $ onto $V( J)$ of $\spec A$---the correspondence theorem in commutative algebra gives us that the prime ideals of $A/J$ correspond to prime ideals of $A$ that contain $J$, i.e. $V(J)$ (in fact, it is not too hard to show that if $\mathfrak q$ is any ideal of $A$, then $A / \pi ^{-1}(\mathfrak q) \simeq (A/J)/\mathfrak q $). Furthermore, the map of structure sheaves $\mathscr O_{\spec A} \to \pi^\sharp_\ast \mathscr O_{\spec A/J} $ is surjective as it is surjective on stalks (on stalks, we have localizations of $A$ and $A/J$, respectively). In general, if $\mathfrak J$ is any ideal of $A$, then we produce a closed subscheme on a closed set $V(\mathfrak J)$ of $\spec A$. To quote directly, "In particular, every closed subset [$\spec A/\mathfrak J$] of $\spec A$ has many closed subscheme structures, corresponding to all the ideals [$\mathfrak J$] for which $[V(\mathfrak J)  = \spec A / \mathfrak J]$. In fact, every closed subscheme structure on a closed subset [$\spec A/\mathfrak J$] of an affine scheme [$\spec A$] arises from an ideal in this way." (\citepalias{Hart}, 85)
+\end{ex}
+
+\begin{defi} Let $f \colon X \to Y$ be a morphism of schemes. The \textbf{diagonal morphism} is the unique morphism $\Delta_{X/Y} \colon X  \to  X \times_Y X$ whose composition with both projection maps $p_1,p_2:X \times_Y X \to X$ is the identity map of $X \to X$. We say that the morphism $f$ is \textbf{separated} if the diagonal morphism $\Delta_{X/Y}$ is a closed immersion. In that case we also say $X$ is \textbf{separated over} $Y$. A scheme $X$ is separated if it is separated over $\spec \zz$.	
+\end{defi}
+\begin{lemma}
+	Let $f \colon X \to Y$ be a morphism of affine schemes, then $f$ is separated. 
+\end{lemma}
+\begin{proof}
+	Write $X = \spec A$ and $Y = \spec B$. Then $X \times_Y X = \spec (A \otimes_B A)$, and the diagonal morphism corresponds to $A \otimes_B A \to A$, where $a \otimes b \mapsto ab$. This map is clearly surjective, and we have that $A \simeq A \otimes_B A/J$ for some ideal $J$ of $A \otimes_B A$. Hence $\Delta_{X/Y}$ is a closed immersion, and $f$ is thus separated. 
+\end{proof}
+
+\subsection{Quasi-Coherent and Coherent Sheaves}
+The canonical construction of a scheme from \citepalias{Hart} begins with bare bones description where we attach a sheaf of rings to the Zariski topology on  $X = \spec A$ by defining, for any open subset $U \subseteq X$, $\mathscr O _X(U)$ to be the set (with a ring structure) $s \colon U \to \bigsqcup_{\p \in U}A_{\p}$ such that the point $[ \p ]$ associated to the prime ideal $\p$ is  in $U$ and $s[\p] \in A_{\p}$ with $s$ being locally a fraction. Now we make an analogous construction to the case of an $A$-module $M$, where we define a sheaf of modules $\widetilde{M}$ on $\spec A$. We do this as follows: Suppose $M$ is an $A$-module. For any open set $U$ of $X =\spec A$ we define the group $\widetilde{M} (U)$ to be the set of functions $s \colon U \to \bigsqcup_{\p \in U}M_{\p}$ such that the point $[ \p ]$ associated to the prime ideal $\p$ is  in $U$ and $s[\p] \in A_{\p}$ with $s$ being locally a fraction with, i.e. for each $[\p] \in U$ there is an open neighborhood $[\p] \in V \subseteq U$ such that we have elements $m \in M$ and $f \in A$, such that for each $[ \mathfrak q] \in V$,$f \notin [\mathfrak q]$, and $s(\mathfrak q)= m/f$ in $M_\mathfrak q$. We call $\widetilde{M}$ the \textit{sheaf associated} to $M$ on $\spec A$.
+\begin{prop}[\citepalias{Hart}, II.5, 5.1]
+	Let $A$ be a ring, let $M$ be an $A$-module, and let $\widetilde{M}$ be the sheaf on $X =\spec A$ associated to $M$. Then: 
+	\begin{itemize}
+		\item[ (a)] $\widetilde{M}$ is an $\mathscr O _X$-module;
+		\item[(b)] for each $\p \in X$, the stalk $(\widetilde{M})_{\p}$ of the sheaf $\widetilde{M}$ at $\p$ is isomorphic to the localized module $M_{\p}$;
+		\item[(c)] for any $f \in A$, the $A_f$-module $\widetilde{M}(D(f))$ is isomorphic to the localized module $M_f$;
+		\item[(d)] in particular, $\Gamma(X, \widetilde{M}) = M$.
+	\end{itemize}
+\end{prop}
+\begin{defi}
+Let $(X, \mathscr O_X)$ be a scheme. A sheaf of $\mathscr O_X$-modules $\mathscr F$ is \textbf{quasicoherent} if $X$ can be covered by open affine subsets $V_i = \spec A_i$ such that for each $i$ there is an $A_i$-module $M_i$ with $\mathscr F | _{V_i} \simeq \widetilde{M}_i$. We say that $\mathscr F$ is \textbf{coherent} if furthermore each $M_i$ can be taken to be a finitely generated $A_i$-module. 
+\end{defi}
+\begin{ex}
+Let $A$ be a ring and $\mathfrak q$ be 	an ideal of $A$. Then $\spec (A/\mathfrak q) \subseteq \spec A$ can be considered as a the closed subscheme of $\spec A$. Let $\ell \colon \spec (A/\mathfrak q) \to \spec A$ be the inclusion morphism; the sheaf $\ell_{\ast} \mathscr O_{\spec (A/\mathfrak q )}$ is a coherent $\mathscr O_{\spec A}$-module, where $\ell_{\ast} \mathscr O_{\spec (A/\mathfrak q)} \simeq \widetilde{(A/\mathfrak q)}$. More generally, given any scheme $X$, its corresponding structure sheaf $\mathscr O_X$ is coherent since any scheme is covered by affine opens $\mathcal U = \{ \spec A_i \colon i \in I \}$ and the restriction to any affine open $\spec A_\alpha \in \mathcal U$ with the structure sheaf gives $\mathscr O_X |_{\spec A_\alpha} \simeq \widetilde{A_\alpha}$
+.\end{ex}
+
+We say an $\mathscr O_X$-module $\mathscr F$ is \textit{free of rank $r$} if $\mathscr F$ is isomorphic to the direct sum of $r$ copies of $\mathscr O_X$-module; for shorthand, we write $\mathscr F \simeq \mathscr O_X^{\oplus r} := \mathscr O_X \oplus \mathscr O_X \oplus \cdots \oplus \mathscr O_X $ $r$ many times. Additionally, $\mathscr F$ is \textit{locally free of rank $r$} if there exists an open affine cover $\mathfrak U = \{U_i \}$ of $X$ such that each restriction $\mathscr F_{U_i}$ isomorphic to $\mathscr O_X |_{U_i} ^{\oplus r}$. Moreover, if we have the special case of an $\mathscr O_X$-module $\mathscr L$ being free of rank $r=1$, then we say that $\mathscr L$ is an invertible sheaf (or, as some do, $\mathscr L$ is also sometimes called a \textit{line bundle}). Note that an $\mathscr O_X$-module $\mathscr L$ that is locally of rank $r$ is quasi-coherent, since we have an $\mathscr O_X$-module $\mathscr L$ that is locally free of rank $r$ then we have at any open affine cover $\mathfrak U = \{ U_i = \spec A_i \colon i \in I \}$ that gives $\mathscr L |_{\spec A_i} \simeq \mathscr O_X|_{\spec A_i}^{\oplus r } \simeq \widetilde{A_i^{\oplus r}} = \widetilde{A_i}^{\oplus r}$.
+
+We introduce (or recall) some particularly important sheaves of $\mathscr O_X$-modules: The \textit{tensor product} of two $\mathscr O_X$-modules $\mathscr F$ and $\mathscr G$ to be the sheaf associated to the presheaf $U \mapsto \mathscr F(U) \otimes_{\mathscr O_X(U)} \mathscr G(U)$, which we will simply denote by $\mathscr F \otimes_{\mathscr O_X} \mathscr G$. Moreover, if $U \subseteq X$ is an open set and $\mathscr F$ and $\mathscr G$ are two $\mathscr O_X$-modules, then the presheaf given by $U \mapsto \Hom_{\mathscr O_X|_U} (\mathscr F |_U, \mathscr G|_U)$ is a sheaf that is denoted by $\mathcal{H}om _{\mathscr O_X} (\mathscr F, \mathscr G)$.\footnote{The notation may be a little confusing so we should additionally make a clear remark that when we're given an open set $U$ of $X$ then $\mathscr F |_U$ is the restriction sheaf down to that open set, and so $\mathcal{H}om _{\mathscr O_X} (\mathscr F, \mathscr G) \neq \Hom (\mathscr F(U), \mathscr G(U))$; that is, we're looking at morphisms of $\mathscr O_X$-modules for the sheaf $\mathcal{H}om _{\mathscr O_X} (\mathscr F, \mathscr G)$. } Note that for $U \subseteq X$ open, $\mathscr F |_U$ is an $\mathscr O_X|_U$-module, and $\mathcal{H}om _{\mathscr O_X} (\mathscr F, \mathscr G)$ is indeed itself an $\mathscr O_X$-module. 
+\section{\'Etale morphisms} 
+\begin{defi}
+ Let $X/S$ be a scheme over $S$ with structure morphism $f \colon X \to S$. One says that  
+ \begin{itemize}
+ 	\item[(i)] $X/S$ is of \textbf{locally finite type} if $S$ has a cover consisting of open affine subsets $V_i = \spec A_i$ such that each $f ^{-1} (V_i)$ can be covered by affine subsets of the form $\spec B _{ij}$, where each $B _{ij}$ is finitely generated as an $A_i$-algebra;   
+ 	\item[(ii)]  $f$ is of \textbf{finite type} if, in (i), one can do with a finite number of $\spec B _{ij}$. 
+\end{itemize}
+\begin{ex} For a ring $R$, the open immersion $\spec R_f \to \spec R$ is a morphism of finite type as $R_f$ is generated as an $R$ algebra by $1/f$ where $f \in R$. However, the localization at a prime ideal $\mathfrak p \in \spec R$ of $R$ does not induce a morphism of schemes that is finite type in general as $A_\mathfrak p$ is not a finitely generated $A$-algebra. In particular, $\spec (\mathscr O _{X,P}) \to X$ is not of finite type where $P \in X$. More generally, a morphism of affine schemes $\spec B \to \spec A$ is of finite type if $B$ is a finitely generated $A$-algebra. So, using this, if we let $K$ be a number field (that is, a finite field extension of $\qq $, e.g. $\qq (\sqrt{2})$) then the corresponding ring of algebraic integers $\mathcal O_K$ is indeed a finitely generated $\zz$-module; thus we have that $\spec \mathcal O_K \to \spec \zz$ is of finite type. Relevant to latter discussion: let $p$ be prime, $\zeta$ is a $p$th root of unity and consider the corresponding number field $\mathbb Q (\zeta)$ (often called the \textit{cyclotomic field}). Then the integral basis for $\mathcal O_{\mathbb Q (\zeta)} = \zz [\zeta]$is given by $(1, \zeta, \zeta^2, \ldots, \zeta^{p-2})$ and it is of rank $[\qq (\zeta) : \qq ]$.
+\end{ex}
+
+ 
+\end{defi}
+In the special case where $S$ is affine, say, $S = \spec T$, one says that a scheme $X$ over $S$ is of \textit{locally finite type} (resp. \textit{finite type}) over $S$ if the structure morphism $X \to \spec T$ is locally of finite type (resp. finite type). Speaking of special cases, our notion of a scheme being of locally finite type/of finite type is a weaker restriction of a stronger finiteness property a morphism can have:
+
+\begin{defi}
+ Let $f \colon X \to S$ be a scheme over $S$. We say that    
+ \begin{itemize}
+ 	\item[(i)] $f$ is \textbf{affine} if there is a covering $\spec A_i$ of $S$ such that each $f ^{-1} (\spec A_i)$ is itself affine;   
+ 	\item[(ii)] $f$ is \textbf{finite} if it is affine, and in the notation above, if for each $f ^{-1} (\spec A_i) = \spec B_i$, the $A_i$-algebra $B_i$ is a finitely generated $A_i$-module. 
+\end{itemize}
+\end{defi}
+\begin{ex} Any closed immersion is finite. 
+\end{ex}
+
+\begin{prop}
+ Let $X/S$ be a scheme over $S$ with structure morphism $f \colon X \to S$. Then $X/S$ is of locally finite type (resp. finite type/resp. affine/resp. finite) if $X/S$ is of locally finite type (resp. finite type/resp.affine/resp. finite) for one affine covering of $S$.
+ \end{prop} 
+
+\begin{defi} Let $f \colon X \to S$ be a morphism of schemes, let $x \in X$, and let $\ell  = f(x)$. Then we say that $f$ is \textbf{locally of finite presentation at $x$} if there exists affine open neighborhoods $V = \spec A$ of $\ell $ and $U = \spec B$ of $x$ such that $B$ is of finite presentation over $A$ \footnote{$B$ is an $A$-algebra and is isomorphic as an $A$-algebra to $A[x_1, \ldots, x_n] / I$ for some $n \in \nn$ and some finitely generated ideal $I$ of the polynomial ring $A[x_1, \ldots, x_n]$}. We say that $f$ is \textbf{locally of finite presentation} (or that the $S$-scheme $X$ is \textbf{locally of finite presentation}) if $f$ is locally of finite presentation at every $x \in X$.
+\end{defi}	
+
+
+\begin{defi} \label{def: 1.1}
+A local homomorphism $f \colon A \to B$ of local rings is \textbf{unramified} if $f(\mathfrak m_A) B = \mathfrak m_B$ and the map on residue fields $ \kappa(\mathfrak m_A) = A / \mathfrak m_A \to \kappa (\mathfrak m _B) = B / \mathfrak m_B$ is a finite separable extension. 
+\end{defi}
+\begin{disc}\label{disc: 1.1} A nonzero polynomial $f$ in $k[x]$ where $k$ is a field is said to be \textit{separable} if $(f, f^\prime ) = (1)$, i.e. $f$ and its (formal) derivative generate the unit ideal of $k[x]$; otherwise $f$ is \textit{inseparable}. Let $L/K$ be an algebraic field extension. (In the case we talk about finite field extensions, we mean $K$ is subfield of $L$ such that the degree of $L/K$ is finite, i.e. $[L \colon K ] < \infty$, where $[L \colon K] = \dim_K L$ as a $K$-vector space.) An element $\alpha \in L$ is said to be \textit{separable over $K$} if $\alpha$ is algebraic over $K$ for a separable polynomial in $K[x]$ \footnote{Some define, very directly, $\alpha \in L$ to be \textit{separable} if the the minimal (necessarily irreducible) polynomial of $\alpha $ over $K$ is a separable polynomial (i.e. it posses no repeated roots in a field extension, or, the most easiest definition to work with, its formal derivative is not zero). The meaning of minimal polynomial is that if we let $\alpha \in L$ then $\alpha$ has a minimal polynomial when $f(\alpha) = 0$ (i.e. $\alpha$ is algebraic over $K$) for some non-zero polynomial $f(x) \in F[x]$ that is defined as being the monic polynomial of least degree of all polynomials in $F[x]$ for which $\alpha$ is a root. For example, if $L = \rr$ and $K = \qq$, then $\alpha = \sqrt{2} \in L$ has the minimal polynomial $a (x) = x^2-2$. In the discussion above, our $\alpha $ which is algebraic for some separable polynomial in $K[x]$ gives us that its minimal polynomial in necessarily separable.} Furthermore, the field $L$ is called \textit{separable} over $K$ if every $x \in L$ is separable; otherwise $L$ is said to be \textit{inseparable}. And, lastly, a field $K$ is called \textit{perfect} if all its finite field extensions are separable. 
+\begin{prop}
+All finite fields, algebraically closed fields, and all fields of characteristic zero are perfect.	
+\end{prop}
+\begin{lemma} If $f \in k[x]$ is an irreducible polynomial for a field $k$, then $f$ is inseparable if and only if $f^\prime = 0$.	
+\end{lemma}
+\begin{proof}
+	Let $f(x) \in k[x]$ such that it is irreducible. Suppose that $f$ is inseparable; then $\gcd (f(x), f^\prime (x))$ is a nontrivial divisor for $f(x)$ and $f^\prime (x)$. Thus $\gcd (f(x), f^\prime(x)) = \deg f(x)$ as we have $f$ being irreducible. So $\deg f^\prime(x) < \deg f(x) = \deg (\gcd ((f(x), f^\prime(x)))$, so $\gcd (f(x), f^\prime(x))$ can't divide $f^\prime (x)$ unless if we had $f^\prime (x) = 0$. Now as $f$ is irreducible, then $\deg f(x) > 0$ and $f(x)$ is not zero nor a unit of $k[x]$. Let $f (x) ^\prime = 0$. This gives us $\gcd (f(x), f^\prime (x)) = f$ which is not in $k^\times$, and $f$ is inseparable. 
+\end{proof}
+
+ In the case that we do not have a perfect field, and we would like to check whether or not we have a separable field extension on our hands, it's arduous work to verify that every element of the extension is indeed separable. The following two theorems (that are difficult) will be of practical use as it will allow us to check sufficiently on a set of field generators for an extension. 
+\begin{theorem} Let $L/K$ be a finite extensions and write $L=K(\theta_1, \ldots, \theta_n)$. Then $L/K$ is separable if and only if each $\theta_i$ is separable over $K$
+\end{theorem}
+\begin{theorem}[Primitive Element Theorem] Every finite separable extension of $K$ has the form $K(\alpha)$ for some $\alpha$.
+\end{theorem}
+\end{disc}
+
+\begin{lemma}\label{lem: 2.1} Let $L/K$ be a finite field extension. Then $L/K$ is separable if and only $L \simeq K[x]/(f(x))$ with separable $f$.
+\end{lemma}
+As with Definition \ref{def: 1.1}, we need for the residue field of $A$ at its local ring $\mathfrak m_A$ to be such that $\kappa (\mathfrak m_B)  \simeq \kappa(\mathfrak m_A) [x]/(f(x))$, where $f$ is separable (i.e. $f(x)$ is irreducible and $f^\prime (x) \neq 0$). This discussion of separable extensions is particularly important to our latter notion of \textit{\'etale}, and how separable field extensions play with the module of relative differentials.
+\begin{prop} \label{prop: 2.3} Suppose $L/K$ is a finite extension. If $L/K$ is separable, then $\Omega_{L/K}^1  = 0$.
+\end{prop}
+\begin{proof} Suppose $L$ be a finite separable extension of $K$. As per Lemma \ref{lem: 2.1}, we have that $L \simeq K[x]/(f(x))$, for which $(f(x), f^\prime(x)) = K[x]$ but this additionally means that $f(x)$ has derivative not zero (as mentioned in Discussion \ref{disc: 1.1}). Now $d \colon K[x] /(f(x)) \simeq L \to \Omega_{L/K}$ and $ 0 = d (f(x)) = f^\prime (x) dx$, meaning that $dx = 0$. As $\Omega_{L/K}$ is generated by $dx$, this shows that $\Omega_{L/K} = 0$.  
+\end{proof}
+\begin{defi}
+A morphism $f \colon X \to Y$ of schemes is \textbf{unramified at $P \in X$} if $f$ is locally of finite type, the induced map on local rings $f^\sharp \colon \mathscr O _{Y, f(P)} \to \mathscr O _{X, P}$ is such that $f^\sharp (\mathfrak m_{Y, f(P)} ) \mathscr O_{X,P} = \mathfrak m_{X, P} $, and the extension of residue fields $\kappa(P)/\kappa(f(P))$ is finite and separable, where $\kappa(P) = \mathscr O_{X,P}/\mathfrak m _{X,P}$ and $\kappa (f(P)) = \mathscr O_{Y, f(P)} /\mathfrak m_{Y, f(P)}$. We say that $f$ is \textbf{unramified} if it is unramified at all $P \in X$. 
+\end{defi}
+ 
+\begin{defi}
+A morphism of schemes $f \colon X \to Y$ is a said to be \textbf{flat at} $P \in X$ if $\mathscr O_{X, P}$ is flat as an $\mathscr O_{Y, f(P)}$-module. The map $f\colon X \to Y$ is said to be \textbf{flat} if it is flat at every point of $X$. And $f \colon X \to Y$ of schemes if called \textbf{faithfully flat} if $f$ is flat and surjective (on topological spaces). 
+\end{defi}
+\begin{ex} An open immersion is flat. An open immersion is locally of the form $\spec A_f \to \spec A$ for some ring $A$ and $f \in A$, and $A_f$ is flat as for a multiplicative set $S \subseteq A$ the localization $S^{-1} A$ is a flat module. 
+\end{ex}
+
+
+\begin{rem}[Milne] It suffices to check the unramified and flatness condition for closed points of $P$ of $X$.
+\end{rem}
+
+
+\begin{defi}
+A morphism of schemes $f \colon X \to Y$ is called \textbf{\'etale at $P \in X$} if $f$ is unramified and flat at $P$. It is called \textbf{\'etale} if it is \'etale at every point $P \in X$.
+\end{defi}
+\begin{theorem} Let $f \colon X \to Y$ be a morphism locally of finite type. The following are equivalent:
+\begin{itemize}
+	\item [(i)] $f$ is unramified at $x$.
+	\item [(ii)] $(\Omega_{X/Y})_x = 0$.
+	\item [(iii)] There is an open neighborhood $U \subseteq X$ of $x$ such that the diagonal morphism $\Delta_{X/Y} \colon X \to X \times_Y X $ restricts to an open immersion $\Delta_{X/Y} |_U \colon U \to X \times_Y X$.
+\end{itemize}	
+\end{theorem} 
+\begin{proof} $(i) \Rightarrow (ii)$ This is a local condition so we may assume $X = \spec B$, and $Y = \spec A$ and $x = \mathfrak q $ and $y = \mathfrak p$ are prime ideals for $B$ and $A$ respectively. As we're assuming $f$ is unramified at $\mathfrak q$, then $\mathfrak p B_{\mathfrak q} = \mathfrak q B_{\mathfrak q}$ which gives $B_{\mathfrak q} \otimes_{A_\mathfrak p} \kappa (\mathfrak p) = B_{\mathfrak q} \otimes_{A_\mathfrak p} (A_{\mathfrak p} / \mathfrak p A_{\mathfrak p}) \simeq  B_{\mathfrak q} /\mathfrak p B_{\mathfrak q} = \kappa (\mathfrak q) $. Now, $(\Omega_{X/Y})_x \simeq \Omega_{B_{\mathfrak q} / A_{\mathfrak p}} $, and $\Omega_{B_\mathfrak q/ A_\mathfrak p} \otimes_{B_\mathfrak q} \kappa (\mathfrak p) \simeq \Omega_{( B_\mathfrak q \otimes_{A_\mathfrak p } \kappa (\mathfrak p) ) /\kappa (\mathfrak p)} = \Omega_{\kappa (\mathfrak q)/\kappa (\mathfrak p)}$. Now the extension of fields $\kappa (\mathfrak q)/ \kappa (\mathfrak p)$ is finite and separable, and so by Proposition \ref{prop: 2.3} we have $\Omega_{\kappa (\mathfrak q)/\kappa (\mathfrak p)} = 0$. Lastly, as $f$ is of finite type then $\Omega_{B_\mathfrak q/A_\mathfrak p}$ is finitely generated, which gives, by Nakayama's lemma, that $\Omega_{B_\mathfrak q/ A_\mathfrak p } = 0$. 
+\end{proof}
+
+\section{Sites and Sheaves}
+
+
+We will describe the basic and fundamental aspects of what Grothendieck topologies (and sites) throughout this section, and give a reason as to why they are actually desirable. In part, the motivation for the construction of these things are so that we can \textit{free} the theory of sheaves from topological spaces in some sense; we need not rely strictly on working within the of open sets for some topological space, $X_{\text{open}}$, to get the full power of the theory developed surrounding (pre)sheaves of the form $\mathscr F \colon X_{\text{open}} \to \mathscr C$ (where we are often interested in $\mathscr C$ being $\mathbf{Ab}$ or $\mathbf{CRing}$, and some others). It was Grothendieck who of course pioneered this in, for example, his 1957 Toh\^oku paper where he developed a sheaf theory (and a cohomology theory for sheaves) without needing to rely on topological spaces in the general sense. 
+
+As an aside to note, topology initially started out with working metric spaces, such as $\rr$ and $\cc$ with their corresponding norms, but the movement from \textit{working away} from metric spaces and to topological spaces was the idea of abstracting away from the metric to subsets of the metric space (decreed to be open sets), as that was the more essential part of the construction of metric spaces. Then we can see a Grothendieck topology as an abstraction away from open sets, to a theory based on \textit{coverings}, which is what Grothendieck saw as the essential part of topological spaces.
+\subsection{Basics of Sites}
+We will closely follow \textit{sites} as they are presented in the Stacks Project (SP, \citepalias{Stacks}). 
+Without so much of the formality, in a category $\mathcal S$, we call a family of morphisms with a \textit{fixed} target (say, the fixed target was $V \in \mathcal S$) a collection $ \mathfrak U = \{ \varphi_i \colon U_i \to V \}_{i \in I}$ that satisfies some nice properties: (i) an object $V \in \mathcal S$ (as described before), (ii) a set $I$ (possibly empty), and for all $i \in I$, a morphism $\varphi_i \colon U_i \to V$ of $\mathcal S$ with target $V$.
+\begin{defi}[\citepalias{Stacks}, \href{https://stacks.math.columbia.edu/tag/00VH}{Tag 00VH}] A \textbf{site} consists of a category $\mathcal S$ and a set $\cov (\mathcal S)$ consisting of families of morphisms with fixed target called \textbf{coverings}, such that: 
+\begin{itemize}
+	\item [(1)] (isomorphism) if $\varphi \colon V \to U$ is an isomorphism in $\mathcal S$, then $\{\varphi \colon V \to U \}$ is a covering, 
+	\item [(2)] (locality) if $\{ \varphi_i \colon V_i \to V \}_{i \in I}$ is a covering and for each $i \in I$ we are given a covering $\{ \psi _{ij} \colon U_{ij} \to V_i \}_{j \in J_i}$, then $\{ \varphi_i \circ \psi_{ij} \colon U_{ij} \to V \}_{(i,j) \in \prod _{i \in I} \{i \} \times I_i}$ is also a covering, and
+	\item [(3)] (base change) if $\{V_i \to V \}_{i \in I}$ is a covering and $U \to V$ is a morphism in $\mathcal S$, then: \begin{itemize} \item[(i)] for all $i \in I$ the fibre product $V_i \times_V U$ exists in $\mathcal S$, and \item[(ii)] $\{V_i \times _V U \to V \}_{i \in I}$ is a covering.\end{itemize}
+\end{itemize}
+\end{defi} When we refer to some site $(\mathcal S, \cov(\mathcal S))$, we will abuse notation and just refer to it's underlying category; if we want to be explicit about the category, we will denote the underlying category of a site by $| \mathcal S |$. 
+
+As according to the base change properties of a site, we can make note of the fact that we require fibre products to exists so to work with, in a way, similar to that of intersection of sets. Recall that if $\mathcal S = \mathbf{Sets}$ and $U, V \subseteq W$ in $\mathbf{Sets}$ then their fibre product $U \times_W V$ is simply the intersection of $U$ and $V$, i.e. $U \times_W V = U \cap V$. This fibre product is the one associated to the following example of a site. 
+\begin{ex} (The Zariski Site). Let $X$ be a topological space. Consider the category of open sets in $X$, denoted as $X_{\text{open}}$, where for any $U,V \in X_{\text{open}}$, 
+\[
+\Hom_{X_{\text{open}}}(U,V) = \begin{cases}
+ \{i \}, 	& \text{if $U \subseteq V$, and $i \colon U \to V$ is the inclusion} \\
+ \varnothing, & \text{otherwise.} 
+ \end{cases}
+\] Now let $\cov (W)$ be the collection of families $\{W_i \to W \}_{i \in I}$ such that $\bigcup _i W_i = W$, i.e. $ \{W_i \}_{i \in I}$ form an open covering of $W$. Then $\cov(W)$ is a Grothendieck topology on $\mathcal S$, and we call $\cov (W)$ the \textit{classical Grothendieck topology}. Furthermore, if we let $X$ be a scheme, then the site associated to the underlying topological space $|X|$, is called the \textit{(small) Zariski site}, denoted by $X_{\text{Zar}}$.
+\end{ex}
+\begin{ex}(Small \'etale site). Let $X$ be a scheme. We define $X _{\acute{e} t}$, which is called the \textit{small \'etale site} on $X$, to be the full subcategory of $\mathfrak { \acute{E} t} /X$ whose objects are \'etale morphisms $V \to X$, i.e. consisting of schemes \'etale over $X$. That is, objects of $X _{\acute{e} t}$ are $X$-morphisms $ V \to X $ that are \'etale and the morphisms of the objects, say, $V \to W$, where $V \to X$ and $W \to X$ are \'etale morphisms, are just $X$-morphisms. (As an aside, these $X$-morphisms between the objects of $X_{\acute{e}t}$ are also \'etale.) Call a collection of morphisms $\{ \varphi_i \colon V_i \to V \} _{i \in I}$ an open covering (i.e. to be in $\cov(V)$) if the map $\bigcup_i \varphi_i (V_i) = V$ as topological spaces. 	
+\end{ex}
+\begin{ex}(Big \'etale site). The \textit{big \'etale site} is the category $\mathfrak {Sch}/X$ where a covering of a scheme $X$ is a collection of \'etale morphisms $\{ \varphi_i \colon U_i \to X \}$ of $\mathfrak {Sch}/X$ such that $\bigcup _i \varphi_i(U_i) = X$. We denote the big \'etale site by $X _{\acute{E}t}$.	
+
+It is useful to note here that in either case of the small or big \'etale site, the basics of sheaves and cohomology work for both. Yet,  ``the cohomology of a big \'etale sheaf equals the cohomology of its restriction to the small \'etale site" (Poonen, 168). So it is often more beneficial to simply work with $X_{\acute{e} t}$ as it is easier to work with.
+\end{ex}
+
+\begin{ex}[The big fppf and fpqc sites] Let $X$ be a scheme, and consider the category $\mathcal S = \mathfrak{Sch}/X$. An open covering is a family $\{ \varphi_i \colon V_i \to V \}_{i \in I}$ of $X$-morphisms such that $\bigsqcup V_i \to V$ is fppf (resp. fpqc). This defines the big fppf site $X_{\text{fppf}}$ (resp. the big fpqc site, denoted $X_{\text{fpqc}}$). The reason for these abbreviations are that fppf and fpqc are French for \textit{fid\`element plat de pr\'esentation finie} and \textit{fid\`element plat quasi-compact} respectively.
+
+As shown how we described the small and big \'etale sites, it is easy to see how we would describe the small fppf and fpqc sites, however, we omit a description since they're generally not nice to work with; a main flaw is the failure of the morphisms between the objects of the small sites not being themselves fppf or fpqc in either case---all $k$-varieties are fppf over $\spec k$, yet a $k$-morphism between two $k$-varieties is not necessarily flat (something similar occurs with fpqc).
+\end{ex}
+\subsection{(Pre)Sheaves as sites}
+\begin{defi}
+A \textbf{presheaf (of abelian groups)} $\mathscr F$ on a site $\mathcal S$ is a contravariant functor $\mathscr F \colon |\mathcal S| \to \mathbf{Ab}$. An element in $\mathscr F(U)$, where $U \in \mathcal S$, is called a \textbf{section of $\mathscr F$ over $U$}. 
+\end{defi}
+\begin{ex}
+Let $M$ be an abelian group. Then we define the \textit{constant presheaf} $M$ on a site $\mathcal S$ as the contravariant functor $\underline{M}$ such that $\underline{M} (U) = M$ for all $U \in \mathcal S$ and for all morphisms of $\mathcal S$ to the identity morphism $M \to M$. 
+\end{ex}
+\begin{defi}
+Let $A, B,C$ be sets, and $f \colon A \to B$, $g \colon B\to C$, $h \colon B \to C$ be functions. Then the sequence 
+\[
+\begin{tikzcd}
+A \arrow[r, "f"] & B \arrow[r, "g", shift left] \arrow[r, "h"', shift right] & C
+\end{tikzcd} 
+\] is said to be \textbf{exact} if 
+\begin{itemize}
+	\item [(i)] $f$ is injective, and
+	\item [(ii)] $f(A)$ equals the \textit{equalizer} $\{ b \in B \colon g(b) = h(b) \}$ of $g$ and $h$.
+\end{itemize}
+\end{defi}
+\begin{lemma} Let $M, P$, and $L$ be abelian groups, and let $f \colon M \to P$, $g \colon P \to L$, and $h \colon P \to L$ be homomorphisms. Then 
+\[
+\begin{tikzcd}
+M \arrow[r, "f"] & P \arrow[r, "g", shift left] \arrow[r, "h"', shift right] & L
+\end{tikzcd} 
+\] 
+is exact if and only if the sequence of abelian groups
+\[
+0 \to M \xrightarrow {f}  P \xrightarrow{g-h} L 
+\] is exact.
+\end{lemma}
+\begin{defi}
+Let $\mathscr F$ be a presheaf on a site $\mathcal S$. Then $\mathscr F$ is a \textbf{sheaf} if 
+\begin{equation}
+	\begin{tikzcd}
+\mathscr F(U) \arrow[r] & \prod_i \mathscr F(U_i)  \arrow[r, shift left] \arrow[r, shift right] & \prod_{i, j} \mathscr F(U_i \times_U U_j)
+\end{tikzcd} 
+\end{equation} is exact for all open covering $\{U_i \to U \}$. A \textbf{morphism of sheaves} $\mathscr F \to \mathscr G$ is a morphism at the level of presheaves. 
+\end{defi}
+In the above definition, we should note here that the arrows in the right of the exact sequence correspond to the projections from $U_i \times_U U_j \to  U_i$ and $U_i \times_U U_j \to  U_j$. 
+
+
+\section{Algebraic Groups}
+\subsection{Group Schemes}
+\begin{defi}
+Let $S$ be a scheme. A \textbf{group scheme} over $S$ is an $S$-scheme $G$ along with the following data for morphisms:
+\begin{itemize}
+	\item [(i)] $m \colon G \times_S G \to G$, called the \textit{multiplication map};
+	\item [(ii)] $e \colon S \to G$, called the \textit{unit section}; and 
+	\item [(iii)] $i \colon G \to G$, called the \textit{inverse}.
+\end{itemize}	
+that fit into the following commutative diagrams:
+\begin{itemize}
+	\item [(a)] \[ \begin{tikzcd}
+G \times _S G \times _S G \arrow[r, "{ (m, \id) }"] \arrow[d, "{ (\id, m)}"] & G \times_S G \arrow[d, "m"] \\
+G \times _S G \arrow[r, "m"]                & G               
+\end{tikzcd} \]
+	\item [(b)] \begin{tikzcd}
+G \times _S S \arrow[r, "\sim "] \arrow[rd, "{(\id, e)}"'] & G \arrow[r, "\id"]   & G & S \times_S G \arrow[rd, "{(e, \id )}"'] \arrow[r, "\sim "] & G \arrow[r, "\id "]   & G \\
+                                  & G\times_S G \arrow[ru, "m"'] &   &                                   & G\times_S G  \arrow[ru, "m"'] &  
+\end{tikzcd}
+\item[(c)]\[ 
+\begin{tikzcd}
+G \arrow[d] \arrow[rr, "{(i, \id)}", shift left] \arrow[rr, "{ (\id, i)}"', shift right] &  & G \times _S G \arrow[d, "m"] \\
+S \arrow[rr, "e"]                                                     &  & V               
+\end{tikzcd}\]
+\end{itemize}
+\end{defi}
+
+
+\footnote{A morphisms of schemes $X \to Y$ is \textit{fppf} if it is faithfully flat and locally of finite presentation. Recall: \cite{Poon} Lastly, recall we recall flatness of schemes: Let $A$ be a commutative ring, and let $B$ be an $A$-module. Then $B$ is \textit{flat} (\textit{as an $A$-algebra}) if the functor $-\otimes_A B$ is exact. This means that if we have a sequence $0 \to N \to M \to L \to 0$ of $A$-modules, then the sequence provided by $- \otimes_A B$ is itself flat; that is, the functor $- \otimes_A B\colon  M \mapsto M\otimes_A B $ from $A$-modules to $B$-modules is exact.  }
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{ett.bib}
+\end{document}
